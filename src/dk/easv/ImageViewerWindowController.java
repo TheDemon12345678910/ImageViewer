@@ -70,4 +70,7 @@ public class ImageViewerWindowController
             imageView.setImage(images.get(currentImageIndex));
         }
     }
+
+    public void handleBtnSlideShow(ActionEvent event) {
+    }
 }

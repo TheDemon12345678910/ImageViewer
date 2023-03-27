@@ -15,16 +15,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+
 import static java.lang.Thread.sleep;
 
 public class ImageViewerWindowController implements Initializable {
+
+    private SlideShow slideShow;
+
     private final List<Image> images = new ArrayList<>();
+    @FXML
+    private Label lblCurrentImage;
     @FXML
     private Button btnSlideShow;
     private int currentImageIndex = 0;
@@ -90,33 +97,29 @@ public class ImageViewerWindowController implements Initializable {
         }
     }
 
-    private void displayImage() {
+
+
+    public void displayImage() {
+
         if (!images.isEmpty()) {
             imageView.setImage(images.get(currentImageIndex));
         }
     }
 
-    public void handleBtnSlideShow(ActionEvent event) throws InterruptedException {
-        t.start();
-        /*
-        SlideShow slideShow = new SlideShow(images);
-        boolean bool = true;
-        while(bool) {
-            Thread.sleep(3000);
-            currentImageIndex = currentImageIndex + 1;
-            if(currentImageIndex == images.size()-1){
-                currentImageIndex = 0;
-            }
-            System.out.println("ny  "+currentImageIndex);
-            Platform.runLater(()->displayImage());
-        }
-         */
-        //SlideShow slideShow = new SlideShow();
-        //ExecutorService executorService = Executors.newFixedThreadPool(2);
-        //executorService.submit(slideShow);
-        //int i = 0;
-        //if (i == 0) {
-        //slideShow.stopNow();
-        //}
+
+
+    public void handleBtnSlideShow() {
+        slideShow = new SlideShow(images);
+            slideShow.valueProperty().addListener((obs, o, n) -> imageView.setImage(n));
+            slideShow.messageProperty().addListener((obs, o, n) -> lblCurrentImage.setText(n));
+
+            ExecutorService es = Executors.newSingleThreadExecutor();
+            es.submit(slideShow);
+            es.shutdown();
+
+    }
+
+    public void handleBtnSlideShowSTOP() {
+        slideShow.cancel(true);
     }
 }

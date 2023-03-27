@@ -79,14 +79,12 @@ public class ImageViewerWindowController
 
     public void handleBtnSlideShow(ActionEvent event) throws InterruptedException {
         boolean bool = true;
-        while(bool) {
-            Thread.sleep(3000);
-            currentImageIndex = currentImageIndex + 1;
-            if(currentImageIndex == images.size()-1){
-                currentImageIndex = 0;
-            }
-            System.out.println("ny  "+currentImageIndex);
-            Platform.runLater(()->displayImage());
+        //while(bool) {
+        for (int i = 0; i < 10; i++) {
+            //Thread.sleep(3000);
+            handleBtnNextAction();
+            System.out.println("new image");
+            //Platform.runLater(()->displayImage());
         }
         //SlideShow slideShow = new SlideShow();
         //ExecutorService executorService = Executors.newFixedThreadPool(2);

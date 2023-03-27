@@ -1,18 +1,29 @@
 package dk.easv;
 
-public class SlideShow implements Runnable{
+import javafx.concurrent.Task;
+import javafx.scene.image.Image;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SlideShow extends Task<Image> {
+
+    private List<Image> images;
+    public SlideShow(List<Image> images) {
+        this.images = images;
+    }
 
     @Override
-    public void run() {
+    protected Image call() throws Exception {
         try {
-
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public void stopNow() {
-        Thread.currentThread().stop();
+        System.exit(0);
     }
 }

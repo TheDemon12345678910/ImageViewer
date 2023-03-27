@@ -34,6 +34,7 @@ public class ImageViewerWindowController
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select image files");
+        fileChooser.setInitialDirectory(new File("C:\\Users\\Miran\\ImageViewer\\data\\Images"));
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Images",
                 "*.png", "*.jpg", "*.gif", "*.tif", "*.bmp"));
         List<File> files = fileChooser.showOpenMultipleDialog(new Stage());

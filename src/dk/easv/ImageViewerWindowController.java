@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,7 +72,7 @@ public class ImageViewerWindowController implements Initializable {
     @FXML
     private void handleBtnPreviousAction() {
         if(t.isAlive()) {
-            t.stop();
+            t.interrupt();
             System.out.println("Stop thread");
         }
         if (!images.isEmpty()) {
@@ -98,6 +99,7 @@ public class ImageViewerWindowController implements Initializable {
     public void handleBtnSlideShow(ActionEvent event) throws InterruptedException {
         t.start();
         /*
+        SlideShow slideShow = new SlideShow(images);
         boolean bool = true;
         while(bool) {
             Thread.sleep(3000);

@@ -35,13 +35,19 @@ public class ImageViewerWindowController implements Initializable {
     @FXML
     private ImageView imageView;
     private Thread t;
+    private boolean bool;
+    private int num = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        bool = true;
         t = new Thread(() -> {
-            while (true) {
+            while (bool) {
                 try {
-                    handleBtnNextAction();
+                    if (!images.isEmpty()) {
+                        currentImageIndex = (currentImageIndex + 1) % images.size();
+                        displayImage();
+                    }
                     System.out.println("ImgNum: " + currentImageIndex);
                     sleep(3000);
                 } catch (InterruptedException e) {
@@ -71,10 +77,8 @@ public class ImageViewerWindowController implements Initializable {
 
     @FXML
     private void handleBtnPreviousAction() {
-        if(t.isAlive()) {
-            t.interrupt();
-            System.out.println("Stop thread");
-        }
+        bool = false;
+        btnSlideShow.setDisable(false);
         if (!images.isEmpty()) {
             currentImageIndex =
                     (currentImageIndex - 1 + images.size()) % images.size();
@@ -84,6 +88,8 @@ public class ImageViewerWindowController implements Initializable {
 
     @FXML
     private void handleBtnNextAction() {
+        bool = false;
+        btnSlideShow.setDisable(false);
         if (!images.isEmpty()) {
             currentImageIndex = (currentImageIndex + 1) % images.size();
             displayImage();
@@ -97,7 +103,14 @@ public class ImageViewerWindowController implements Initializable {
     }
 
     public void handleBtnSlideShow(ActionEvent event) throws InterruptedException {
-        t.start();
+        btnSlideShow.setDisable(true);
+        bool = true;
+        if (num == 0) {
+            num = num + 1;
+            t.start();
+        }
+    }
+
         /*
         SlideShow slideShow = new SlideShow(images);
         boolean bool = true;
@@ -109,12 +122,11 @@ public class ImageViewerWindowController implements Initializable {
             //Platform.runLater(()->displayImage());
         }
          */
-        //SlideShow slideShow = new SlideShow();
-        //ExecutorService executorService = Executors.newFixedThreadPool(2);
-        //executorService.submit(slideShow);
-        //int i = 0;
-        //if (i == 0) {
-        //slideShow.stopNow();
-        //}
-    }
+    //SlideShow slideShow = new SlideShow();
+    //ExecutorService executorService = Executors.newFixedThreadPool(2);
+    //executorService.submit(slideShow);
+    //int i = 0;
+    //if (i == 0) {
+    //slideShow.stopNow();
+    //}
 }

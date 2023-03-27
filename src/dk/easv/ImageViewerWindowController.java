@@ -8,13 +8,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,8 +28,6 @@ public class ImageViewerWindowController implements Initializable {
     private final List<Image> images = new ArrayList<>();
     @FXML
     private Label lblCurrentImage;
-    @FXML
-    private Button btnSlideShow;
     private int currentImageIndex = 0;
 
     @FXML
@@ -69,9 +63,7 @@ public class ImageViewerWindowController implements Initializable {
 
         if (!files.isEmpty()) {
             files.forEach((File f) ->
-            {
-                images.add(new Image(f.toURI().toString()));
-            });
+                    images.add(new Image(f.toURI().toString())));
             displayImage();
         }
     }

@@ -3,9 +3,13 @@ package dk.easv;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -15,6 +19,7 @@ import javafx.stage.Stage;
 public class ImageViewerWindowController
 {
     private final List<Image> images = new ArrayList<>();
+    public Button btnSlideShow;
     private int currentImageIndex = 0;
 
     @FXML
@@ -72,5 +77,17 @@ public class ImageViewerWindowController
     }
 
     public void handleBtnSlideShow(ActionEvent event) {
+        SlideShow slideShow = new SlideShow();
+        ExecutorService es = Executors.newFixedThreadPool(1);
+        if (btnSlideShow.getText().equals("Start SlideShow")) {
+            btnSlideShow.setText("Stop SlideShow");
+
+
+            es.submit(slideShow);
+        }
+        if (btnSlideShow.getText().equals("Stop SlideShow")) {
+            btnSlideShow.setText("Start SlideShow");
+            es.shutdownNow();
+        }
     }
 }

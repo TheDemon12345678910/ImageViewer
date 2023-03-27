@@ -24,7 +24,7 @@
                             </opaqueInsets>
                         </Button>
                         <Button id="btnNext" fx:id="btnNext" mnemonicParsing="false" onAction="#handleBtnNextAction" text="Next" />
-                  <Button id="btnNext" fx:id="btnSlideShow" mnemonicParsing="false" onAction="#handleBtnSlideShow" text="SlideShow" />
+                  <Button id="btnNext" fx:id="btnSlideShow" mnemonicParsing="false" onAction="#handleBtnSlideShow" text="Start SlideShow" />
                     </buttons>
                 </ButtonBar>
             </children>

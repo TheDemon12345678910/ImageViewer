@@ -3,11 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.ImageViewerWindowController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.ImageViewerWindowController">
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="1091.0" BorderPane.alignment="CENTER">
             <children>
@@ -25,6 +27,7 @@
                         </Button>
                         <Button id="btnNext" fx:id="btnNext" mnemonicParsing="false" onAction="#handleBtnNextAction" text="Next" />
                   <Button id="btnNext" fx:id="btnSlideShow" mnemonicParsing="false" onAction="#handleBtnSlideShow" text="Start SlideShow" />
+                  <Button id="btnNext" fx:id="btnSlideShow1" mnemonicParsing="false" onAction="#handleBtnSlideShowSTOP" text="Stop SlideShow" />
                     </buttons>
                 </ButtonBar>
             </children>
@@ -40,4 +43,11 @@
             </center>
         </BorderPane>
     </center>
+   <bottom>
+      <Label fx:id="lblCurrentImage" text="Label" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+   </bottom>
 </BorderPane>

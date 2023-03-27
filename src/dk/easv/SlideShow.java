@@ -3,7 +3,6 @@ package dk.easv;
 import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SlideShow extends Task<Image> {
@@ -15,13 +14,16 @@ public class SlideShow extends Task<Image> {
 
     @Override
     protected Image call() throws Exception {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+       while(true) {
+           for (Image i : images) {
+               this.updateValue(i);
+               this.updateMessage(i.getUrl());
+               Thread.sleep(5000);
+           }
+
         }
-        return null;
     }
+
 
     public void stopNow() {
         System.exit(0);

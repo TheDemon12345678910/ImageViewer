@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -20,7 +21,8 @@ import javafx.stage.Stage;
 public class ImageViewerWindowController
 {
     private final List<Image> images = new ArrayList<>();
-    @FXML private Button btnSlideShow;
+    @FXML
+    private Button btnSlideShow;
     private int currentImageIndex = 0;
 
     @FXML
@@ -79,6 +81,7 @@ public class ImageViewerWindowController
     }
 
     public void handleBtnSlideShow(ActionEvent event) throws InterruptedException {
+        SlideShow slideShow = new SlideShow(images);
         boolean bool = true;
         while(bool) {
             Thread.sleep(3000);
@@ -89,12 +92,6 @@ public class ImageViewerWindowController
             System.out.println("ny  "+currentImageIndex);
             Platform.runLater(()->displayImage());
         }
-        //SlideShow slideShow = new SlideShow();
-        //ExecutorService executorService = Executors.newFixedThreadPool(2);
-        //executorService.submit(slideShow);
-        //int i = 0;
-        //if (i == 0) {
-            //slideShow.stopNow();
-        //}
+
     }
 }

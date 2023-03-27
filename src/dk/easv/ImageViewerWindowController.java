@@ -12,15 +12,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-public class ImageViewerWindowController
-{
+public class ImageViewerWindowController {
+
+    private SlideShow slideShow;
     private final List<Image> images = new ArrayList<>();
+    @FXML
+    private Label lblCurrentImage;
     @FXML
     private Button btnSlideShow;
     private int currentImageIndex = 0;
@@ -32,8 +36,7 @@ public class ImageViewerWindowController
     private ImageView imageView;
 
     @FXML
-    private void handleBtnLoadAction()
-    {
+    private void handleBtnLoadAction() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select image files");
         fileChooser.setInitialDirectory(new File("..\\ImageViewer\\data\\Images"));
@@ -41,8 +44,7 @@ public class ImageViewerWindowController
                 "*.png", "*.jpg", "*.gif", "*.tif", "*.bmp"));
         List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
 
-        if (!files.isEmpty())
-        {
+        if (!files.isEmpty()) {
             files.forEach((File f) ->
             {
                 images.add(new Image(f.toURI().toString()));
@@ -52,10 +54,8 @@ public class ImageViewerWindowController
     }
 
     @FXML
-    private void handleBtnPreviousAction()
-    {
-        if (!images.isEmpty())
-        {
+    private void handleBtnPreviousAction() {
+        if (!images.isEmpty()) {
             currentImageIndex =
                     (currentImageIndex - 1 + images.size()) % images.size();
             displayImage();
@@ -63,35 +63,30 @@ public class ImageViewerWindowController
     }
 
     @FXML
-    private void handleBtnNextAction()
-    {
-        if (!images.isEmpty())
-        {
+    private void handleBtnNextAction() {
+        if (!images.isEmpty()) {
             currentImageIndex = (currentImageIndex + 1) % images.size();
             displayImage();
         }
     }
 
-    private void displayImage()
-    {
-        if (!images.isEmpty())
-        {
+    public void displayImage() {
+        if (!images.isEmpty()) {
             imageView.setImage(images.get(currentImageIndex));
         }
     }
 
-    public void handleBtnSlideShow(ActionEvent event) throws InterruptedException {
-        SlideShow slideShow = new SlideShow(images);
-        boolean bool = true;
-        while(bool) {
-            Thread.sleep(3000);
-            currentImageIndex = currentImageIndex + 1;
-            if(currentImageIndex == images.size()-1){
-                currentImageIndex = 0;
-            }
-            System.out.println("ny  "+currentImageIndex);
-            Platform.runLater(()->displayImage());
-        }
+    public void handleBtnSlideShow() {
+        slideShow = new SlideShow(images);
+            slideShow.valueProperty().addListener((obs, o, n) -> imageView.setImage(n));
+            slideShow.messageProperty().addListener((obs, o, n) -> lblCurrentImage.setText(n));
 
+            ExecutorService es = Executors.newSingleThreadExecutor();
+            es.submit(slideShow);
+            es.shutdown();
+    }
+
+    public void handleBtnSlideShowSTOP() {
+        slideShow.cancel(true);
     }
 }

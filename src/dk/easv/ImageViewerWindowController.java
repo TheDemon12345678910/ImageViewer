@@ -104,7 +104,6 @@ public class ImageViewerWindowController implements Initializable {
     }
 
 
-
     public void displayImage() {
 
         if (!images.isEmpty()) {
@@ -142,12 +141,12 @@ public class ImageViewerWindowController implements Initializable {
     //}
     public void handleBtnSlideShow() {
         slideShow = new SlideShow(images);
-            slideShow.valueProperty().addListener((obs, o, n) -> imageView.setImage(n));
-            slideShow.messageProperty().addListener((obs, o, n) -> lblCurrentImage.setText("Img: " + n.substring(n.indexOf("img"))));
+        slideShow.valueProperty().addListener((obs, o, n) -> imageView.setImage(n));
+        //slideShow.messageProperty().addListener((obs, o, n) -> lblCurrentImage.setText("Img: " + n.substring(n.indexOf("img"))));
 
-            ExecutorService es = Executors.newSingleThreadExecutor();
-            es.submit(slideShow);
-            es.shutdown();
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        es.submit(slideShow);
+        es.shutdown();
 
     }
 

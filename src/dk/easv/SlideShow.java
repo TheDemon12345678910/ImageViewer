@@ -8,8 +8,10 @@ import java.util.List;
 public class SlideShow extends Task<Image> {
 
     private List<Image> images;
-    public SlideShow(List<Image> images) {
+    private int mill;
+    public SlideShow(List<Image> images, int mill) {
         this.images = images;
+        this.mill = mill;
     }
 
     @Override
@@ -18,7 +20,7 @@ public class SlideShow extends Task<Image> {
            for (Image i : images) {
                this.updateValue(i);
                this.updateMessage(i.getUrl());
-               Thread.sleep(5000);
+               Thread.sleep(mill);
            }
 
         }
